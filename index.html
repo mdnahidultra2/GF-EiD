@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EID MUBARAK COOL WISH</title>
+<style>
+body{
+  margin:0;
+  font-family:sans-serif;
+  background:#111;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  color:white;
+}
+
+/* Glowing animated background */
+body::before{
+  content:"";
+  position:absolute;
+  width:200%;
+  height:200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.05), transparent 70%);
+  animation: lightMove 10s linear infinite;
+  z-index:-2;
+}
+@keyframes lightMove{
+  0%{transform:translate(0,0);}
+  50%{transform:translate(-50%,50%);}
+  100%{transform:translate(0,0);}
+}
+
+/* Card with RGB border */
+.card{
+  position:relative;
+  background:#1e2a38;
+  padding:25px;
+  border-radius:20px;
+  text-align:center;
+  width:90%;
+  max-width:400px;
+  box-shadow:0 0 30px rgba(0,0,0,0.7);
+  border:5px solid;
+  border-image: linear-gradient(45deg,#ff0000,#ffbf00,#00ff00,#00ffff,#0000ff,#ff00ff,#ff0000) 1;
+  animation: borderGlow 3s linear infinite;
+  z-index:1;
+}
+
+@keyframes borderGlow{
+  0%{border-image: linear-gradient(45deg,#ff0000,#ffbf00,#00ff00,#00ffff,#0000ff,#ff00ff,#ff0000) 1;}
+  50%{border-image: linear-gradient(135deg,#ff00ff,#0000ff,#00ffff,#00ff00,#ffbf00,#ff0000,#ff00ff) 1;}
+  100%{border-image: linear-gradient(45deg,#ff0000,#ffbf00,#00ff00,#00ffff,#0000ff,#ff00ff,#ff0000) 1;}
+}
+
+/* Glowing EID MUBARAK */
+h1.glow{
+  font-size:2.8em;
+  color:#fffa;
+  text-shadow: 0 0 10px #fff,0 0 20px #ff99ff,0 0 30px #ff66ff,0 0 40px #cc66ff;
+  margin-bottom:20px;
+}
+h2{color:#00eaff;}
+
+button{
+  margin-top:15px;
+  padding:12px 25px;
+  border:none;
+  border-radius:12px;
+  background:#00c6ff;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
+}
+button:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 15px #00c6ff;
+}
+
+#salamiBox{
+  margin-top:15px;
+  padding:12px;
+  border-radius:12px;
+  background: rgba(255,255,255,0.05);
+  border:2px solid #00ffea;
+  animation: rgbGlow 3s linear infinite;
+  display:none;
+}
+
+@keyframes rgbGlow{
+  0%{border-color:#ff0000;}
+  25%{border-color:#00ff00;}
+  50%{border-color:#0000ff;}
+  75%{border-color:#ff00ff;}
+  100%{border-color:#ff0000;}
+}
+
+canvas{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:0;
+}
+</style>
+</head>
+<body>
+<canvas id="fireworks"></canvas>
+
+<audio id="eidSound" loop>
+  <source src="https://cdn.jsdelivr.net/gh/ewrnahid/Eid-wish/sound.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+  <h1 class="glow">EID MUBARAK</h1>
+  <h2 id="nick">Special Person</h2>
+  <div id="content"></div>
+  <button id="btn" onclick="nextStep()">চেক কর</button>
+  <div id="salamiBox"></div>
+  <p style="margin-top:15px;font-size:12px;">
+    DEVELOPER:
+    <a href="https://www.facebook.com/virtual.abbu.nobita1" target="_blank">
+      NAHIDUL ISLAM NAIM
+    </a>
+  </p>
+</div>
+
+<script>
+// URL থেকে name + nick + bkash
+const params = new URLSearchParams(window.location.search);
+const name = params.get("name") || "দোস্ত";
+const nick = params.get("nick") || "Special Person";
+const bkashNumber = params.get("bkash") || "01796457292";
+
+document.getElementById("nick").innerText = nick;
+
+const eidSound = document.getElementById("eidSound");
+let step = 1;
+
+// প্রথম message
+document.getElementById("content").innerHTML =
+`🔥<br><h1 class="glow">ঈদ মোবারক, ${name}!</h1>
+<p>আল্লাহর অশেষ রহমতে আপনার জীবনে আসুক সুখ, শান্তি ও সমৃদ্ধি। ঈদ মোবারক!🕋🕌🥀</p>`;
+document.getElementById("btn").innerText="বিরিয়ানি অ্যালার্ট";
+
+function nextStep(){
+  if(eidSound.paused){ eidSound.play(); }
+
+  const salamiBox = document.getElementById("salamiBox");
+  step++;
+  salamiBox.style.display = "none";
+  salamiBox.innerHTML = "";
+
+  if(step===2){
+    document.getElementById("content").innerHTML =
+    `🍗<h1>বিরিয়ানি অ্যালার্ট</h1>
+    <p>সায়েন্স বলছে, ঈদের দিন আড্ডা না দিলে বিরিয়ানি ঠিকমতো হজম হয় না। 🏃‍♂️</p>`;
+    document.getElementById("btn").innerText="সালামি আপডেট";
+  }
+  else if(step===3){
+    document.getElementById("content").innerHTML = `<h1>সালামি এরর💸!</h1>`;
+    salamiBox.style.display = "block";
+    salamiBox.innerHTML = `
+    <p>সালামি এরর!</p>
+    <p>[ERROR 404: NO BUDGET]</p>
+    <p>তোর মতো বড়লোক বন্ধু থাকতে আমি কেন সালামি দেবো? সালামি পাঠিয়ে দিস🍟</p>
+    <p>BKASH NUMBER📞${bkashNumber}</p>`;
+    document.getElementById("btn").innerText="ফাইনাল মেসেজ";
+  }
+  else if(step===4){
+    document.getElementById("content").innerHTML =
+    `🎉<h1 class="glow">ঈদ মোবারক, ${name}!</h1>
+    <p>সারাজীবন এভাবেই সঙ্গে থাকিস! 🤜🤛</p>`;
+    document.getElementById("btn").innerText="আবার দেখো";
+  }
+  else{
+    step=1;
+    document.getElementById("content").innerHTML =
+    `🔥<br><h1 class="glow">ঈদ মোবারক, ${name}!</h1>
+    <p>আল্লাহর অশেষ রহমতে আপনার জীবনে আসুক সুখ, শান্তি ও সমৃদ্ধি। ঈদ মোবারক!🥀🕋🕌</p>`;
+    document.getElementById("btn").innerText="বিরিয়ানি অ্যালার্ট";
+  }
+}
+
+// Fireworks effect
+const canvas = document.getElementById('fireworks');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let fireworks = [];
+let particles = [];
+
+function random(min,max){ return Math.random()*(max-min)+min; }
+
+class Firework{
+  constructor(x,y,targetY,color){
+    this.x = x;
+    this.y = y;
+    this.targetY = targetY;
+    this.color = color;
+    this.exploded = false;
+  }
+  update(){
+    if(this.y > this.targetY){
+      this.y -= 5;
+    }else if(!this.exploded){
+      this.explode();
+      this.exploded = true;
+    }
+  }
+  explode(){
+    for(let i=0;i<30;i++){
+      particles.push(new Particle(this.x,this.y,this.color));
+    }
+  }
+  draw(){ ctx.fillStyle=this.color; ctx.fillRect(this.x,this.y,2,2);}
+}
+
+class Particle{
+  constructor(x,y,color){
+    this.x = x; this.y = y;
+    this.vx = random(-3,3); this.vy = random(-3,3);
+    this.alpha=1; this.color=color;
+  }
+  update(){ this.x+=this.vx; this.y+=this.vy; this.alpha-=0.02; }
+  draw(){ ctx.globalAlpha=this.alpha; ctx.fillStyle=this.color; ctx.fillRect(this.x,this.y,2,2); }
+}
+
+function animate(){
+  ctx.fillStyle='rgba(0,0,0,0.2)';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  if(Math.random()<0.05){
+    fireworks.push(new Firework(random(50,canvas.width-50),canvas.height,random(50,canvas.height/2),
+      `hsl(${Math.random()*360},100%,50%)`));
+  }
+  fireworks.forEach((fw,i)=>{ fw.update(); fw.draw(); if(fw.exploded) fireworks.splice(i,1); });
+  particles.forEach((p,i)=>{ p.update(); p.draw(); if(p.alpha<=0) particles.splice(i,1); });
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+</body>
+  </html>
